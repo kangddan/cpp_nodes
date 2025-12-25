@@ -7,7 +7,7 @@
 
 
 MTypeId Vectors2Matrix::TYPE_ID{ 0x00141B82 };
-MString Vectors2Matrix::TYPE_NAME{ "Vectors2Matrix" };
+MString Vectors2Matrix::TYPE_NAME{ "vectors2Matrix" };
 
 MObject Vectors2Matrix::OUT_MATRIX;
 
@@ -91,4 +91,5 @@ MStatus Vectors2Matrix::compute(const MPlug& plug, MDataBlock& dataBlock)
 	return MS::kSuccess;
 
 };
+
 
