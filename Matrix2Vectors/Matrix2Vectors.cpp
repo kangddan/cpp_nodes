@@ -14,7 +14,7 @@ MObject Matrix2Vectors::V2;
 MObject Matrix2Vectors::V3;
 MObject Matrix2Vectors::OFFSET;
 
-Matrix2Vectors::Matrix2Vectors() {}
+Matrix2Vectors::Matrix2Vectors() :MPxNode() {}
 Matrix2Vectors::~Matrix2Vectors() {}
 
 void* Matrix2Vectors::creator() 
@@ -89,6 +89,7 @@ MStatus Matrix2Vectors::compute(const MPlug& plug, MDataBlock& dataBlock)
 	return MS::kSuccess;
 
 };
+
 
 
 
