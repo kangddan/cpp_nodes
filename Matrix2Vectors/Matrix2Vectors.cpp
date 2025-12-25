@@ -86,11 +86,14 @@ MStatus Matrix2Vectors::compute(const MPlug& plug, MDataBlock& dataBlock)
 		hV2	.setClean();
 		hV3	.setClean();
 		hOff.setClean();
+
+		dataBlock.setClean(outPlug);
 	}
 
 	return MS::kSuccess;
 
 };
+
 
 
 
