@@ -1,4 +1,3 @@
-#pragma once
 #include <maya/MFnPlugin.h>
 #include <maya/MGlobal.h>
 #include "Matrix2Vectors.h"
@@ -47,4 +46,5 @@ MStatus uninitializePlugin(MObject pluginObj)
     }
 
     return(status);
+
 }
