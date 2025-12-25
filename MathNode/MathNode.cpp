@@ -5,7 +5,7 @@
 #include <maya/MDataHandle.h>
 #include <maya/MGlobal.h>
 
-MTypeId MathNode::TYPE_ID{ 0x00080033 };
+MTypeId MathNode::TYPE_ID{ 0x00141B80 };
 MString MathNode::TYPE_NAME{ "mathNode" };
 
 MObject MathNode::INPUT1;
@@ -106,4 +106,5 @@ MStatus MathNode::initialize()
 	MathNode::attributeAffects(MathNode::INPUT2,   MathNode::OUTPUT);
 	MathNode::attributeAffects(MathNode::FUNCTION, MathNode::OUTPUT);
 	return MS::kSuccess;
+
 }
