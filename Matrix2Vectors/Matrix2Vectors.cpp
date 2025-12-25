@@ -63,10 +63,12 @@ MStatus Matrix2Vectors::initialize()
 
 MStatus Matrix2Vectors::compute(const MPlug& plug, MDataBlock& dataBlock)
 {
-	if (plug == Matrix2Vectors::V1 or
-		plug == Matrix2Vectors::V2 or
-		plug == Matrix2Vectors::V3 or
-		plug == Matrix2Vectors::OFFSET)
+	MPlug outPlug{ plug.isChild() ? plug.parent() : plug };
+	
+	if (outPlug == Matrix2Vectors::V1 or
+		outPlug == Matrix2Vectors::V2 or
+		outPlug == Matrix2Vectors::V3 or
+		outPlug == Matrix2Vectors::OFFSET)
 	{
 		const MMatrix& inMatrix = dataBlock.inputValue(Matrix2Vectors::IN_MATRIX).asMatrix();
 
@@ -89,6 +91,7 @@ MStatus Matrix2Vectors::compute(const MPlug& plug, MDataBlock& dataBlock)
 	return MS::kSuccess;
 
 };
+
 
 
 
