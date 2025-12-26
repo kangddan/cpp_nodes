@@ -31,15 +31,15 @@ MStatus Matrix2Vectors::initialize()
 	matrixAttr.setKeyable(true);
 	matrixAttr.setStorable(true);
 
-	Matrix2Vectors::V1 = numericAttr.create("vector1", "v1", MFnNumericData::k3Double);
+	Matrix2Vectors::V1 = numericAttr.create("vec1", "v1", MFnNumericData::k3Double);
 	numericAttr.setStorable(false);
 	numericAttr.setKeyable(false);
 
-	Matrix2Vectors::V2 = numericAttr.create("vector2", "v2", MFnNumericData::k3Double);
+	Matrix2Vectors::V2 = numericAttr.create("vec2", "v2", MFnNumericData::k3Double);
 	numericAttr.setStorable(false);
 	numericAttr.setKeyable(false);
 
-	Matrix2Vectors::V3 = numericAttr.create("vector3", "v3", MFnNumericData::k3Double);
+	Matrix2Vectors::V3 = numericAttr.create("vec3", "v3", MFnNumericData::k3Double);
 	numericAttr.setStorable(false);
 	numericAttr.setKeyable(false);
 
@@ -93,6 +93,7 @@ MStatus Matrix2Vectors::compute(const MPlug& plug, MDataBlock& dataBlock)
 	return MS::kSuccess;
 
 };
+
 
 
 
