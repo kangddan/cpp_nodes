@@ -73,16 +73,17 @@ MStatus Vectors2Matrix::compute(const MPlug& plug, MDataBlock& dataBlock)
 {
 	if (plug == Vectors2Matrix::OUT_MATRIX)
 	{
-		const double* v1	 = dataBlock.inputValue(Vectors2Matrix::V1).asDouble3();
-		const double* v2	 = dataBlock.inputValue(Vectors2Matrix::V2).asDouble3();
-		const double* v3	 = dataBlock.inputValue(Vectors2Matrix::V3).asDouble3();
-		const double* offset = dataBlock.inputValue(Vectors2Matrix::OFFSET).asDouble3();
+		const double* v1  = dataBlock.inputValue(Vectors2Matrix::V1).asDouble3();
+		const double* v2  = dataBlock.inputValue(Vectors2Matrix::V2).asDouble3();
+		const double* v3  = dataBlock.inputValue(Vectors2Matrix::V3).asDouble3();
+		const double* off = dataBlock.inputValue(Vectors2Matrix::OFFSET).asDouble3();
 
-		MMatrix outMatrix;
-		outMatrix[0][0] = v1[0];	 outMatrix[0][1] = v1[1];	  outMatrix[0][2] = v1[2];
-		outMatrix[1][0] = v2[0];	 outMatrix[1][1] = v2[1];	  outMatrix[1][2] = v2[2];
-		outMatrix[2][0] = v3[0];	 outMatrix[2][1] = v3[1];	  outMatrix[2][2] = v3[2];
-		outMatrix[3][0] = offset[0]; outMatrix[3][1] = offset[1]; outMatrix[3][2] = offset[2];
+		double _m[4][4] = {{  v1[0],   v1[1],  v1[2],  0.0 },
+					   	   {  v2[0],   v2[1],  v2[2],  0.0 },
+						   {  v3[0],   v3[1],  v3[2],  0.0 },
+						   { off[0],  off[1], off[2],  1.0 }};
+
+		MMatrix outMatrix{ _m };
 
 		dataBlock.outputValue(Vectors2Matrix::OUT_MATRIX).setMMatrix(outMatrix);
 		dataBlock.setClean(plug);
@@ -91,5 +92,6 @@ MStatus Vectors2Matrix::compute(const MPlug& plug, MDataBlock& dataBlock)
 	return MS::kSuccess;
 
 };
+
 
 
