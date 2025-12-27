@@ -72,10 +72,10 @@ MStatus Matrix2Vectors::compute(const MPlug& plug, MDataBlock& dataBlock)
 	{
 		const MMatrix& inMatrix = dataBlock.inputValue(Matrix2Vectors::IN_MATRIX).asMatrix();
 
-		MDataHandle hV1  = dataBlock.outputValue(V1);
-		MDataHandle hV2  = dataBlock.outputValue(V2);
-		MDataHandle hV3  = dataBlock.outputValue(V3);
-		MDataHandle hOff = dataBlock.outputValue(OFFSET);
+		MDataHandle hV1  = dataBlock.outputValue(Matrix2Vectors::V1);
+		MDataHandle hV2  = dataBlock.outputValue(Matrix2Vectors::V2);
+		MDataHandle hV3  = dataBlock.outputValue(Matrix2Vectors::V3);
+		MDataHandle hOff = dataBlock.outputValue(Matrix2Vectors::OFFSET);
 		
 		hV1 .set3Double(inMatrix[0][0], inMatrix[0][1], inMatrix[0][2]);
 		hV2 .set3Double(inMatrix[1][0], inMatrix[1][1], inMatrix[1][2]);
@@ -93,6 +93,7 @@ MStatus Matrix2Vectors::compute(const MPlug& plug, MDataBlock& dataBlock)
 	return MS::kSuccess;
 
 };
+
 
 
 
