@@ -15,10 +15,10 @@ private:
 	static MObject OUTPUTS;
 
 public:
-	static MTypeId TYPE_ID;
-	static MString TYPE_NAME;
-	static double  MAIN_EPS;
-	static int	   MAX_ITER;
+	static MTypeId  TYPE_ID;
+	static MString  TYPE_NAME;
+	static double   MAIN_EPS;
+	static unsigned MAX_ITER;
 
 public:
 	CatenarySolver();
@@ -27,4 +27,5 @@ public:
 	virtual MStatus compute(const MPlug& plug, MDataBlock& dataBlock) override;
 	static void* creator();
 	static MStatus initialize();
+
 };
