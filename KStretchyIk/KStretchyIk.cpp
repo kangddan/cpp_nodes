@@ -8,7 +8,7 @@
 #include <cmath>
 #include <limits>
 
-MTypeId KStretchyIk::TYPE_ID  {0x00141B91};
+MTypeId KStretchyIk::TYPE_ID  { 0x00141B91 };
 MString KStretchyIk::TYPE_NAME{ "kStretchyIk" };
 double  KStretchyIk::MAIN_EPS { 1.0e-5 };
 
@@ -297,4 +297,5 @@ void KStretchyIk::setupUI()
 		)";
 
 		MGlobal::executeCommandOnIdle(melCommand, false);
+
 }
