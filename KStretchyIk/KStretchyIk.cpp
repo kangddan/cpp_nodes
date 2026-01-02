@@ -97,18 +97,18 @@ MStatus KStretchyIk::compute(const MPlug& plug, MDataBlock& dataBlock)
 							distRootToGoal / adjustedDist :
 							1.0;
 
-	double stretchedUprLen = KStretchyIk::mix(slideUprLen, stretchFactor * slideUprLen, stretchWeight);
-	double stretchedLwrLen = KStretchyIk::mix(slideLwrLen, stretchFactor * slideLwrLen, stretchWeight);
+	double stretchedUprLen = KStretchyIk::mix<double>(slideUprLen, stretchFactor * slideUprLen, stretchWeight);
+	double stretchedLwrLen = KStretchyIk::mix<double>(slideLwrLen, stretchFactor * slideLwrLen, stretchWeight);
 
 	double distRootToPole = (polePos - rootPos).length() / globalScale;
 	double distGoalToPole = (polePos - goalPos).length() / globalScale;
 
-	double finalUprLen = KStretchyIk::mix(stretchedUprLen, distRootToPole, pinWeight) * invertMult;
-	double finalLwrLen = KStretchyIk::mix(stretchedLwrLen, distGoalToPole, pinWeight) * invertMult;
+	double finalUprLen = KStretchyIk::mix<double>(stretchedUprLen, distRootToPole, pinWeight) * invertMult;
+	double finalLwrLen = KStretchyIk::mix<double>(stretchedLwrLen, distGoalToPole, pinWeight) * invertMult;
 
 	MVector aimDir	    = (goalPos - rootPos).normal();
-	double goalMixDist  = KStretchyIk::mix(adjustedDist, distRootToGoal, stretchWeight) * globalScale;
-	MVector ikHandlePos = KStretchyIk::mix(rootPos + (aimDir * goalMixDist), goalPos, pinWeight);
+	double goalMixDist  = KStretchyIk::mix<double>(adjustedDist, distRootToGoal, stretchWeight) * globalScale;
+	MVector ikHandlePos = KStretchyIk::mix<MVector>(rootPos + (aimDir * goalMixDist), goalPos, pinWeight);
 
 	MMatrix ikWorldMatrix;
 	ikWorldMatrix[3][0] = ikHandlePos.x;
@@ -299,3 +299,4 @@ void KStretchyIk::setupUI()
 		MGlobal::executeCommandOnIdle(melCommand, false);
 
 }
+
