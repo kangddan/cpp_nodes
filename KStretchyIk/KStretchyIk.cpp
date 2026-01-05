@@ -66,11 +66,11 @@ MStatus KStretchyIk::compute(const MPlug& plug, MDataBlock& dataBlock)
 	MMatrix poleMatrix = dataBlock.inputValue(KStretchyIk::POLE_MATRIX).asMatrix();
 	MMatrix goalMatrix = dataBlock.inputValue(KStretchyIk::GOAL_MATRIX).asMatrix();
 
-	MVector rootPos{ rootMatrix(3, 0), rootMatrix(3, 1), rootMatrix(3, 2) };
-	MVector polePos{ poleMatrix(3, 0), poleMatrix(3, 1), poleMatrix(3, 2) };
-	MVector goalPos{ goalMatrix(3, 0), goalMatrix(3, 1), goalMatrix(3, 2) };
-
-	double globalScale = MVector{ rootMatrix(1, 0), rootMatrix(1, 1), rootMatrix(1, 2) }.length();
+	MVector rootPos{ rootMatrix[3][0], rootMatrix[3][1], rootMatrix[3][2] };
+	MVector polePos{ poleMatrix[3][0], poleMatrix[3][1], poleMatrix[3][2] };
+	MVector goalPos{ goalMatrix[3][0], goalMatrix[3][1], goalMatrix[3][2] };
+	
+	double globalScale = MVector{ rootMatrix[1][0], rootMatrix[1][1], rootMatrix[1][2] }.length();
 
 	double baseUprLen = rawRestUpr * uprMultiplier;
 	double baseLwrLen = rawRestLwr * lwrMultiplier;
@@ -297,3 +297,4 @@ void KStretchyIk::setupUI(void)
 
 		MGlobal::executeCommandOnIdle(melCommand, false);
 }
+
