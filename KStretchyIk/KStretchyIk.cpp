@@ -8,9 +8,9 @@
 #include <cmath>
 #include <limits>
 
-MTypeId KStretchyIk::TYPE_ID  { 0x00141B91 };
-MString KStretchyIk::TYPE_NAME{ "kStretchyIk" };
-double  KStretchyIk::MAIN_EPS { 1.0e-5 };
+MTypeId KStretchyIk::TYPE_ID   { 0x00141B91 };
+MString KStretchyIk::TYPE_NAME { "kStretchyIk" };
+double  KStretchyIk::MAIN_EPS  { 1.0e-5 };
 
 // INPUT PORTS
 MObject KStretchyIk::REST_UPR_LENGTH;
@@ -66,18 +66,17 @@ MStatus KStretchyIk::compute(const MPlug& plug, MDataBlock& dataBlock)
 	MMatrix poleMatrix = dataBlock.inputValue(KStretchyIk::POLE_MATRIX).asMatrix();
 	MMatrix goalMatrix = dataBlock.inputValue(KStretchyIk::GOAL_MATRIX).asMatrix();
 
-	MVector rootPos{ rootMatrix[3][0], rootMatrix[3][1], rootMatrix[3][2] };
-	MVector polePos{ poleMatrix[3][0], poleMatrix[3][1], poleMatrix[3][2] };
-	MVector goalPos{ goalMatrix[3][0], goalMatrix[3][1], goalMatrix[3][2] };
+	MVector rootPos{ rootMatrix(3, 0), rootMatrix(3, 1), rootMatrix(3, 2) };
+	MVector polePos{ poleMatrix(3, 0), poleMatrix(3, 1), poleMatrix(3, 2) };
+	MVector goalPos{ goalMatrix(3, 0), goalMatrix(3, 1), goalMatrix(3, 2) };
 
-	MVector scaleVec{ rootMatrix[1][0], rootMatrix[1][1], rootMatrix[1][2] };
-	double globalScale = scaleVec.length();
+	double globalScale = MVector{ rootMatrix(1, 0), rootMatrix(1, 1), rootMatrix(1, 2) }.length();
 
 	double baseUprLen = rawRestUpr * uprMultiplier;
 	double baseLwrLen = rawRestLwr * lwrMultiplier;
 
-	double slideUprLen  = baseUprLen * (slideValue + 1.0);
-	double slideLwrLen  = baseLwrLen * (1.0 - slideValue);
+	double slideUprLen  = baseUprLen  * (slideValue + 1.0);
+	double slideLwrLen  = baseLwrLen  * (1.0 - slideValue);
 	double totalRestLen = slideUprLen + slideLwrLen;
 
 	double softThreshold   = totalRestLen * softRatio;
@@ -110,16 +109,16 @@ MStatus KStretchyIk::compute(const MPlug& plug, MDataBlock& dataBlock)
 	double goalMixDist  = KStretchyIk::mix<double>(adjustedDist, distRootToGoal, stretchWeight) * globalScale;
 	MVector ikHandlePos = KStretchyIk::mix<MVector>(rootPos + (aimDir * goalMixDist), goalPos, pinWeight);
 
-	MMatrix ikWorldMatrix;
-	ikWorldMatrix[3][0] = ikHandlePos.x;
-	ikWorldMatrix[3][1] = ikHandlePos.y;
-	ikWorldMatrix[3][2] = ikHandlePos.z;
+	MMatrix ikHandleWorldMatrix;
+	ikHandleWorldMatrix[3][0] = ikHandlePos.x;
+	ikHandleWorldMatrix[3][1] = ikHandlePos.y;
+	ikHandleWorldMatrix[3][2] = ikHandlePos.z;
 
-	MMatrix ikLocalMatrix = ikWorldMatrix * goalMatrix.inverse();
+	MMatrix ikHandleLocalMatrix = ikHandleWorldMatrix * goalMatrix.inverse();
 
-	dataBlock.outputValue(KStretchyIk::OUT_UPR_LENGTH).setDouble(finalUprLen);
-	dataBlock.outputValue(KStretchyIk::OUT_LWR_LENGTH).setDouble(finalLwrLen);
-	dataBlock.outputValue(KStretchyIk::OUT_IK_HANDLE_LOCAL_MATRIX).setMMatrix(ikLocalMatrix);
+	dataBlock.outputValue(KStretchyIk::OUT_UPR_LENGTH)			  .setDouble(finalUprLen);
+	dataBlock.outputValue(KStretchyIk::OUT_LWR_LENGTH)			  .setDouble(finalLwrLen);
+	dataBlock.outputValue(KStretchyIk::OUT_IK_HANDLE_LOCAL_MATRIX).setMMatrix(ikHandleLocalMatrix);
 
 	dataBlock.setClean(KStretchyIk::OUT_UPR_LENGTH);
 	dataBlock.setClean(KStretchyIk::OUT_LWR_LENGTH);
@@ -256,7 +255,7 @@ MStatus KStretchyIk::initialize()
 	return MStatus::kSuccess;
 }
 
-void KStretchyIk::setupUI()
+void KStretchyIk::setupUI(void)
 {
 	const char* melCommand = R"(
 	global proc AEkStretchyIkTemplate(string $nodeName)
@@ -297,6 +296,4 @@ void KStretchyIk::setupUI()
 		)";
 
 		MGlobal::executeCommandOnIdle(melCommand, false);
-
 }
-
