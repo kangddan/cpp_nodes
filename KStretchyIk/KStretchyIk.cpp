@@ -289,7 +289,8 @@ void KStretchyIk::setupUI(void)
 				editorTemplate -addControl "outLwrLength";
 				editorTemplate -addControl "outIkHandleLocalMatrix";
 			editorTemplate -endLayout;
-
+	
+			AEdependNodeTemplate $nodeName;
 			editorTemplate -addExtraControls;
 		editorTemplate -endScrollLayout;
 	}
@@ -297,4 +298,5 @@ void KStretchyIk::setupUI(void)
 
 		MGlobal::executeCommandOnIdle(melCommand, false);
 }
+
 
