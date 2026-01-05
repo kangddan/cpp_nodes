@@ -121,7 +121,8 @@ void BallRoller::setupUI()
 			editorTemplate -beginLayout "Output" -collapse 1;
 				editorTemplate -addControl "outMatrix";
 			editorTemplate -endLayout;
-
+	
+			AEdependNodeTemplate $nodeName;
 			editorTemplate -addExtraControls;
 		editorTemplate -endScrollLayout;
 	}
@@ -130,3 +131,4 @@ void BallRoller::setupUI()
 	MGlobal::executeCommandOnIdle(melCommand, false);
 
 }
+
