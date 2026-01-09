@@ -33,9 +33,11 @@ public:
 	static  void*   creator();
 	static  MStatus initialize();
 	virtual void    postConstructor() override;
+	SchedulingType  schedulingType() const override { return SchedulingType::kParallel; }
 
 	static double clamp(double v, double _min=0.0, double _max=1.0);
 	static double remap(double v, double inMin,    double inMax);
 	static void   setupUI();
+
 
 };
